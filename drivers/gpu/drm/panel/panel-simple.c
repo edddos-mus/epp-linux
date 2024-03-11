@@ -1152,6 +1152,35 @@ static const struct panel_desc auo_b133htn01 = {
 	},
 };
 
+static const struct drm_display_mode hp_e24_g4_mode = {
+    .clock = 74250,
+    .hdisplay = 1280,
+    .hsync_start = 1280 + 110,
+    .hsync_end = 1280 + 110 + 40,
+    .htotal = 1280 + 110 + 40 + 220,
+    .vdisplay = 720,
+    .vsync_start = 720 + 5,
+    .vsync_end = 720 + 5 + 5,
+    .vtotal = 720 + 5 + 5 + 20,
+};
+
+static const struct panel_desc hp_e24_g4 = {
+    .modes = &hp_e24_g4_mode,
+    .num_modes = 1,
+    .bpc = 8,
+    .size = {
+        .width = 527,
+        .height = 296,
+    },
+	.delay = {
+		.prepare = 100,
+		.enable = 20,
+		.unprepare = 50,
+	},
+	.bus_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST | MIPI_DSI_MODE_VIDEO_SYNC_PULSE,
+	.connector_type = DRM_MODE_CONNECTOR_eDP,
+};
+
 static const struct drm_display_mode auo_b140han06_mode = {
 	.clock = 141000,
 	.hdisplay = 1920,
@@ -4596,6 +4625,9 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "auo,b133htn01",
 		.data = &auo_b133htn01,
 	}, {
+		.compatible = "hp,e24-g4",
+		.data = &hp_e24_g4,
+	},{
 		.compatible = "auo,b140han06",
 		.data = &auo_b140han06,
 	}, {

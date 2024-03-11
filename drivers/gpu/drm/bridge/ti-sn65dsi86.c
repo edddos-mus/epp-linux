@@ -722,7 +722,8 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
 	}
 
 	/* TODO: setting to 4 MIPI lanes always for now */
-	dsi->lanes = 4;
+	//EL: Change the Lanes to 2 to fit the EPP
+	dsi->lanes = 2;
 	dsi->format = MIPI_DSI_FMT_RGB888;
 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO;
 
@@ -1038,6 +1039,12 @@ static void ti_sn_bridge_enable(struct drm_bridge *bridge)
 
 	max_dp_lanes = ti_sn_get_max_lanes(pdata);
 	pdata->dp_lanes = min(pdata->dp_lanes, max_dp_lanes);
+
+		/* EL: Workaround disable ASSR */
+	regmap_update_bits(pdata->regmap, 0xFF, 0xFF, 0x07);
+	regmap_update_bits(pdata->regmap, 0x16, 0xFF, 0x01);
+	regmap_update_bits(pdata->regmap, 0xFF, 0xFF, 0x00);
+	regmap_update_bits(pdata->regmap, 0x5a, 0x0F, 0x0c);
 
 	/* DSI_A lane config */
 	val = CHA_DSI_LANES(SN_MAX_DP_LANES - pdata->dsi->lanes);
