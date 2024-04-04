@@ -266,6 +266,7 @@ static int mv88q2xxx_get_features(struct phy_device *phydev)
 {
 	int ret;
 	printk("We're in the mv88q2xxx_get_features func\n");
+	printk("phy_id recognized? phy_id=%d", phydev->phy_id);
 
 	ret = genphy_c45_pma_read_abilities(phydev);
 	if (ret)
