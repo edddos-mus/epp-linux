@@ -439,7 +439,7 @@ static struct phy_driver mv88q2xxx_driver[] = {
 	},
 	{
 		PHY_ID_MATCH_EXACT(PHY_ID_88Q2220_REVB0),
-		.name			= "mv88q2220",
+		.name			= "Marvell 88Q2220 Driver",
 		.get_features		= mv88q2xxx_get_features,
 		.config_aneg		= mv88q222x_config_aneg,
 		.aneg_done		= genphy_c45_aneg_done,
