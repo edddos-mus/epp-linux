@@ -224,6 +224,7 @@ static int mv88q2xxx_read_aneg_speed(struct phy_device *phydev)
 static int mv88q2xxx_read_status(struct phy_device *phydev)
 {
 	int ret;
+	printk("We're in the mv88q2xxx_read_status func\n");
 
 	if (phydev->autoneg == AUTONEG_ENABLE) {
 		/* We have to get the negotiated speed first, otherwise we are
@@ -264,6 +265,7 @@ static int mv88q2xxx_read_status(struct phy_device *phydev)
 static int mv88q2xxx_get_features(struct phy_device *phydev)
 {
 	int ret;
+	printk("We're in the mv88q2xxx_get_features func\n");
 
 	ret = genphy_c45_pma_read_abilities(phydev);
 	if (ret)
@@ -322,6 +324,7 @@ static int mv88q2xxx_config_init(struct phy_device *phydev)
 static int mv88q2xxxx_get_sqi(struct phy_device *phydev)
 {
 	int ret;
+	printk("We're in the mv88q2xxxx_get_sqi func\n");
 
 	if (phydev->speed == SPEED_100) {
 		/* Read the SQI from the vendor specific receiver status
@@ -357,6 +360,7 @@ static int mv88q2xxxx_get_sqi_max(struct phy_device *phydev)
 static int mv88q222x_soft_reset(struct phy_device *phydev)
 {
 	int ret;
+	printk("We're in the mv88q222x_soft_reset func\n");
 
 	/* Enable RESET of DCL */
 	if (phydev->autoneg == AUTONEG_ENABLE || phydev->speed == SPEED_1000) {
@@ -383,7 +387,10 @@ static int mv88q222x_soft_reset(struct phy_device *phydev)
 
 static int mv88q222x_config_aneg(struct phy_device *phydev)
 {
+
 	int ret;
+
+	printk("We're in the mv88q222x_config_aneg func\n");
 
 	ret = genphy_c45_config_aneg(phydev);
 	if (ret)
@@ -395,6 +402,7 @@ static int mv88q222x_config_aneg(struct phy_device *phydev)
 static int mv88q222x_revb0_config_init(struct phy_device *phydev)
 {
 	int ret, i;
+	printk("We're in the mv88q222x_revb0_config_init func\n");
 
 	for (i = 0; i < ARRAY_SIZE(mv88q222x_revb0_init_seq0); i++) {
 		ret = phy_write_mmd(phydev, mv88q222x_revb0_init_seq0[i].devad,
