@@ -198,6 +198,8 @@ static int mv88q2xxx_read_master_slave_state(struct phy_device *phydev)
 	else
 		phydev->master_slave_state = MASTER_SLAVE_STATE_SLAVE;
 
+	printk("phydev->master_slave_state=%d\n", phydev->master_slave_state);
+
 	return 0;
 }
 
@@ -227,7 +229,6 @@ static int mv88q2xxx_read_status(struct phy_device *phydev)
 	printk("We're in the mv88q2xxx_read_status func\n");
 
 	if (phydev->autoneg == AUTONEG_ENABLE) {
-		printk("88Q2220: AUTONEG enabled\n");
 		/* We have to get the negotiated speed first, otherwise we are
 		 * not able to read the link.
 		 */
