@@ -1874,14 +1874,15 @@ static int imx708_probe(struct i2c_client *client)
 	struct device *dev = &client->dev;
 	struct imx708 *imx708;
 	int ret;
-
+	printk("imx708_probe\n");
 	imx708 = devm_kzalloc(&client->dev, sizeof(*imx708), GFP_KERNEL);
 	if (!imx708)
 		return -ENOMEM;
-
-	v4l2_i2c_subdev_init(&imx708->sd, client, &imx708_subdev_ops);
+	printk("imx708_probe1\n");
+	v4l2_i2c_subdev_init(&imx708->sd, client, &imx708_subdev_ops); //
 
 	/* Check the hardware configuration in device tree */
+	printk("Going into imx708_check_hwcfg\n");
 	if (imx708_check_hwcfg(dev))
 		return -EINVAL;
 
