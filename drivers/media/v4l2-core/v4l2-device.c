@@ -211,6 +211,7 @@ int __v4l2_device_register_subdev_nodes(struct v4l2_device *v4l2_dev,
 
 		video_set_drvdata(vdev, sd);
 		strscpy(vdev->name, sd->name, sizeof(vdev->name));
+		printk("__v4l2_device_register_subdev_nodes. vdev->name: %s\n", vdev->name);
 		vdev->dev_parent = sd->dev;
 		vdev->v4l2_dev = v4l2_dev;
 		vdev->fops = &v4l2_subdev_fops;
@@ -221,6 +222,7 @@ int __v4l2_device_register_subdev_nodes(struct v4l2_device *v4l2_dev,
 		sd->devnode = vdev;
 		err = __video_register_device(vdev, VFL_TYPE_SUBDEV, -1, 1,
 					      sd->owner);
+		printk("__v4l2_device_register_subdev_nodes. __video_register_device. err: %d\n", err);
 		if (err < 0) {
 			sd->devnode = NULL;
 			kfree(vdev);
