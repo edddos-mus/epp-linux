@@ -169,10 +169,12 @@ static struct media_entity *find_entity_by_name(struct mxc_md *mxc_md,
 						const char *name)
 {
 	struct media_entity *ent = NULL;
-
+	printk("entering %s\n", __func__);
+	printk("name: %s\n", name);
+	printk("mxc_md: %p\n", mxc_md);
 	if (!mxc_md || !name)
 		return NULL;
-
+	printk("entering media_device_for_each_entity\n");
 	media_device_for_each_entity(ent, &mxc_md->media_dev) {
 		if (!strcmp(ent->name, name)) {
 			dev_dbg(&mxc_md->pdev->dev,
@@ -310,17 +312,24 @@ static int mxc_md_create_links(struct mxc_md *mxc_md)
 	u16  source_pad, sink_pad;
 	u32 flags;
 	u32 mipi_vc = 0;
-
+	printk("entering %s\n", __func__);
+	
 	/* Create links between each ISI's subdev and video node */
 	flags = MEDIA_LNK_FL_ENABLED;
 	for (i = 0; i < MXC_ISI_MAX_DEVS; i++) {
 		mxc_isi = &mxc_md->mxc_isi[i];
+		printk("mxc_isi->sd: %p\n", mxc_isi->sd);
+		printk("mxc_isi->sd_name: %s\n", mxc_isi->sd_name);
+		printk("mxc_isi->vdev_name: %s\n", mxc_isi->vdev_name);
+		
 		if (!mxc_isi->sd)
 			continue;
 
 		/* Connect ISI source to video device */
 		source = find_entity_by_name(mxc_md, mxc_isi->sd_name);
+		printk("source: %p\n", source);
 		sink = find_entity_by_name(mxc_md, mxc_isi->vdev_name);
+		printk("sink: %p\n", sink);
 		sink_pad = 0;
 
 		switch (mxc_isi->interface[OUT_PORT]) {
@@ -608,6 +617,7 @@ static int subdev_notifier_complete(struct v4l2_async_notifier *notifier)
 	printk("v4l2_device_register_subdev_nodes ret: %d\n", ret);
 unlock:
 	mutex_unlock(&mxc_md->media_dev.graph_mutex);
+	asm("nop");
 	if (ret < 0) {
 		v4l2_err(&mxc_md->v4l2_dev, "%s error exit\n", __func__);
 		return ret;
