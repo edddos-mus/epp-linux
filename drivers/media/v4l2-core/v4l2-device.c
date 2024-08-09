@@ -192,10 +192,12 @@ int __v4l2_device_register_subdev_nodes(struct v4l2_device *v4l2_dev,
 	struct video_device *vdev;
 	struct v4l2_subdev *sd;
 	int err;
-
+	printk("__v4l2_device_register_subdev_nodes\n");
 	/* Register a device node for every subdev marked with the
 	 * V4L2_SUBDEV_FL_HAS_DEVNODE flag.
 	 */
+	printk("name: %s\n", v4l2_dev->name);
+	printk("v4l2_dev->subdevs: %p\n", &v4l2_dev->subdevs);
 	list_for_each_entry(sd, &v4l2_dev->subdevs, list) {
 		if (!(sd->flags & V4L2_SUBDEV_FL_HAS_DEVNODE))
 			continue;

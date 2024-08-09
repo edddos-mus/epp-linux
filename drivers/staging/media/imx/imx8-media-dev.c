@@ -591,19 +591,21 @@ static int subdev_notifier_bound(struct v4l2_async_notifier *notifier,
 
 static int subdev_notifier_complete(struct v4l2_async_notifier *notifier)
 {
+	printk("entering %s\n", __func__);
 	struct mxc_md *mxc_md = notifier_to_mxc_md(notifier);
 	int ret;
-
+	printk("Mxc_md name: %s\n", mxc_md->pdev->name);
 	dev_dbg(&mxc_md->pdev->dev, "%s\n", __func__);
 	mutex_lock(&mxc_md->media_dev.graph_mutex);
 
 	ret = mxc_md_create_links(mxc_md);
+	printk("mxc_md_create_links ret: %d\n", ret);
 	if (ret < 0)
 		goto unlock;
 
 	mxc_md->link_status = 1;
-
 	ret = v4l2_device_register_subdev_nodes(&mxc_md->v4l2_dev);
+	printk("v4l2_device_register_subdev_nodes ret: %d\n", ret);
 unlock:
 	mutex_unlock(&mxc_md->media_dev.graph_mutex);
 	if (ret < 0) {
